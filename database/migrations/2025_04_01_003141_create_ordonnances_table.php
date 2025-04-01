@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('ordonnances', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('id_consultation');
-            $table->char('dedetails_medicament');
+            $table->id();  // Clé primaire
+            $table->foreignId('id_consultation')->constrained('consultations');  // Clé étrangère vers consultations
+            $table->char('details_medicament');  // Détails du médicament
+            $table->timestamps();  // Ajoute les colonnes created_at et updated_at
         });
-
         Schema::enableForeignKeyConstraints();
     }
 

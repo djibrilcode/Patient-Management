@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('factures', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('id_consultation');
+            $table->id();  // Clé primaire
+            $table->foreignId('id_consultation')->constrained('consultations');  // Clé étrangère vers consultations
             $table->double('montant');
             $table->char('statut_paiement');
             $table->char('mode_paiement');
             $table->date('date_paiement');
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

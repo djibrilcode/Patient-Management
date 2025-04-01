@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('patients', function (Blueprint $table) {
+        Schema::create('medecins', function (Blueprint $table) {
             $table->id();
-            $table->char('nom');
-            $table->char('prenom');
-            $table->foreign('prenom')->references('id_medecin')->on('rendez_vous');
-            $table->date('date_naissance');
-            $table->char('adresse');
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('specialite');
             $table->bigInteger('telephone');
-            $table->char('email');
-            $table->foreign('email')->references('id_consultation')->on('consultations');
+            $table->string('email');
+           
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('medecins');
     }
 };

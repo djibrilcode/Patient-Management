@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('medecins', function (Blueprint $table) {
-            $table->id();
-            $table->char('nom');
-            $table->foreign('nom')->references('id_medecin')->on('rendez_vous');
-            $table->char('prenom');
-            $table->char('specialite');
+        Schema::create('patients', function (Blueprint $table) {
+            $table->id();  // Clé primaire auto-incrémentée
+            $table->string('nom');
+            $table->string('prenom');
+            $table->date('date_naissance');
+            $table->string('adresse');
             $table->bigInteger('telephone');
-            $table->char('email');
-            $table->foreign('email')->references('id_consultation')->on('consultations');
+            $table->string('email')->unique();
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medecins');
+        Schema::dropIfExists('patients');
     }
 };

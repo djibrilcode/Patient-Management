@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('prescription', function (Blueprint $table) {
+        Schema::create('rendez_vous', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_consultation');
-            $table->char('medicament');
-            $table->char('durée');
+            $table->foreignId('id_patient')->constrained('patients');  // Clé étrangère vers la table patients
+            $table->foreignId('id_medecin')->constrained('medecins');  // Clé étrangère vers la table medecins
+            $table->dateTime('date_heure');
+            $table->string('statut');
+            $table->timestamps();
         });
-
         Schema::enableForeignKeyConstraints();
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prescription');
+        Schema::dropIfExists('rendez_vous');
     }
 };
