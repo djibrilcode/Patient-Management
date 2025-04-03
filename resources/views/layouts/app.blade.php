@@ -16,6 +16,135 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
+<!-- ... Autres scripts ... -->
+
+<!-- Scripts globaux -->
+<script>
+    // =============================================
+    // 1. FONCTIONS UTILITAIRES GLOBALES
+    // =============================================
+    
+    /**
+     * Affiche une confirmation SweetAlert2
+     * @param {string} title - Titre de l'alerte
+     * @param {string} text - Message de confirmation
+     * @returns {Promise} Résultat de la confirmation
+     */
+    function showConfirm(title, text) {
+        return Swal.fire({
+            title: title || 'Êtes-vous sûr ?',
+            text: text || "Cette action est irréversible !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmer'
+        });
+    }
+
+    /**
+     * Gère les erreurs AJAX
+     * @param {Error} error - Objet d'erreur
+     */
+    function handleAjaxError(error) {
+        console.error('Erreur AJAX:', error);
+        Swal.fire('Erreur !', error.message || 'Une erreur est survenue', 'error');
+    }
+
+    // =============================================
+    // 2. INITIALISATIONS GLOBALES
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Active les tooltips Bootstrap partout
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Gestion générique des formulaires de suppression
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleDeleteForm(this);
+            });
+        });
+    });
+
+    // =============================================
+    // 3. FONCTIONS MÉTIERS GLOBALES
+    // =============================================
+    
+    /**
+     * Gère la soumission d'un formulaire de suppression
+     * @param {HTMLFormElement} form - Formulaire à traiter
+     */
+    async function handleDeleteForm(form) {
+        try {
+            const result = await showConfirm();
+            if (!result.isConfirmed) return;
+
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ _method: 'DELETE' })
+            });
+
+            if (!response.ok) throw new Error(await response.text());
+
+            // Suppression de la ligne du tableau
+            form.closest('tr').remove();
+            Swal.fire('Supprimé !', '', 'success');
+        } catch (error) {
+            handleAjaxError(error);
+        }
+    }
+
+    /**
+     * Gère les modals pour création/édition
+     * @param {string} modalId - ID du modal
+     */
+    function initCrudModal(modalId) {
+        const modalEl = document.getElementById(modalId);
+        if (!modalEl) return;
+
+        const modal = new bootstrap.Modal(modalEl);
+        const form = modalEl.querySelector('form');
+        
+        // Gestion de la soumission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const formData = new FormData(this);
+                const method = formData.get('_method') || 'POST';
+                
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error(await response.text());
+
+                modal.hide();
+                Swal.fire('Succès !', 'Opération réussie.', 'success')
+                    .then(() => window.location.reload());
+            } catch (error) {
+                handleAjaxError(error);
+            }
+        });
+
+        return modal;
+    }
+</script>
+
+@stack('scripts')
 <body>
     <!-- Barre de menu horizontale -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -55,7 +184,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('patients.index') }}">
                                 <i class="bi bi-people me-2"></i> Gestion des patients
                             </a>
                         </li>
