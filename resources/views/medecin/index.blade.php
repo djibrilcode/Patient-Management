@@ -2,46 +2,51 @@
 
 @section('content')
 <div class="container-fluid">
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <!-- En-tête et bouton d'ajout -->
     <div class="row mb-4">
         <div class="col-md-6">
             <h2 class="mb-0">
-                <i class="bi bi-people-fill text-primary"></i> Gestion des Patients
+                <i class="bi bi-people-fill text-primary"></i> Gestion des Medecins
             </h2>
         </div>
         <div class="col-md-6 text-end">
-            <a href="{{ route('patients.create') }}" class="btn btn-primary" id="addPatientBtn">
-                <i class="bi bi-plus-lg"></i> Nouveau Patient
+            <a href="{{ route('medecin.create') }}" class="btn btn-primary" id="addmedecinBtn">
+                <i class="bi bi-plus-lg"></i> Nouveau medecin
             </a>
         </div>
     </div>
 
-    <!-- Carte de statistiques -->
+    {{-- <!-- Carte de statistiques -->
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card border-primary border-2">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="text-muted mb-2">Patients Totaux</h6>
-                            <h3 class="mb-0">{{ $patients->total() }}</h3>
+                            <h6 class="text-muted mb-2">medecins Totaux</h6>
+                            <h3 class="mb-0">{{ $medecins->total() }}</h3>
                         </div>
                         <i class="bi bi-people-fill fs-1 text-primary"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <!-- Tableau des patients -->
+    <!-- Tableau des medecins -->
     <div class="card shadow-sm">
         <div class="card-header bg-white">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-0">Liste des Patients</h5>
+                    <h5 class="mb-0">Liste des medecins</h5>
                 </div>
                 <div class="col-md-6">
-                    <form method="GET" action="{{ route('patients.index') }}">
+                    <form method="GET" action="{{ route('medecin.index') }}">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control" placeholder="Rechercher..." value="{{ request('search') }}">
                             <div class="input-group-append">
@@ -56,35 +61,33 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover " id="patientsTable">
+                <table class="table table-hover" id="medecinsTable">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
+                            <th>ID</th>
                             <th>Nom</th>
                             <th>Prénom</th>
-                            <th>DateNaissance</th>
-                            <th>Adresse</th>
+                            <th>spécialité</th>
+                            <th>telphonne</th>
                             <th>Email</th>
-                            <th>Téléphone</th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($patients as $patient)
-                        <tr data-id="{{ $patient->id }}">
-                            <td>{{ $patient->id }}</td>
-                            <td>{{ $patient->nom }}</td>
-                            <td>{{ $patient->prenom }}</td>
-                            <td>{{ $patient->date_naissance}}</td>
-                            <td>{{ $patient->adresse }}</td>
-                            <td>{{ $patient->email }}</td>
-                            <td>{{ $patient->telephone }}</td>
+                        @forelse ($medecins as $medecin)
+                        <tr data-id="{{ $medecin->id }}">
+                            <td>{{ $medecin->id }}</td>
+                            <td>{{ $medecin->nom }}</td>
+                            <td>{{ $medecin->prenom }}</td>
+                            <td>{{ $medecin->spécialité}}</td>
+                            <td>{{ $medecin->telephone }}</td>
+                            <td>{{ $medecin->email }}</td>
                             <td>
                                 <div class="d-flex gap-2">
-                                    <a href="{{ route('patients.edit', $patient) }}" class="btn btn-sm btn-outline-success edit-btn" title="Modifier">
+                                    <a href="{{ route('medecin.edit', $medecin->id) }}" class="btn btn-sm btn-outline-success edit-btn" title="Modifier">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
-                                    <form action="{{ route('patients.destroy', $patient->id) }}" method="POST" class="delete-form">
+                                    <form action="{{ route('medecin.destroy', $medecin->id) }}" method="POST" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')">
@@ -96,7 +99,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center">Aucun patient trouvé</td>
+                            <td colspan="6" class="text-center">Aucun medecin trouvé</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -105,7 +108,7 @@
 
             <!-- Pagination -->
             <div class="d-flex justify-content-center mt-4">
-                {!! $patients->links('pagination::bootstrap-4') !!}
+                {!! $medecins->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

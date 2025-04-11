@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Gestion Cabinet Médical</title>
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    
+
     <!-- Styles personnalisés -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @stack('styles')
@@ -23,7 +23,7 @@
     // =============================================
     // 1. FONCTIONS UTILITAIRES GLOBALES
     // =============================================
-    
+
     /**
      * Affiche une confirmation SweetAlert2
      * @param {string} title - Titre de l'alerte
@@ -73,7 +73,7 @@
     // =============================================
     // 3. FONCTIONS MÉTIERS GLOBALES
     // =============================================
-    
+
     /**
      * Gère la soumission d'un formulaire de suppression
      * @param {HTMLFormElement} form - Formulaire à traiter
@@ -112,15 +112,15 @@
 
         const modal = new bootstrap.Modal(modalEl);
         const form = modalEl.querySelector('form');
-        
+
         // Gestion de la soumission
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             try {
                 const formData = new FormData(this);
                 const method = formData.get('_method') || 'POST';
-                
+
                 const response = await fetch(this.action, {
                     method: 'POST',
                     headers: {
@@ -188,13 +188,19 @@
                                 <i class="bi bi-people me-2"></i> Gestion des patients
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('medecin.index') }}">
+                                <i class="bi bi-people me-2"></i></i> Gestion des medecin
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('rendez-vous.index') }}">
                                 <i class="bi bi-calendar-check me-2"></i> Gestion des rendez-vous
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('consultation.index') }}">
                                 <i class="bi bi-file-earmark-medical me-2"></i> Gestion des consultations
                             </a>
                         </li>
@@ -242,7 +248,7 @@
 
     <!-- Bootstrap 5 JS Bundle avec Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    
+
     <!-- Scripts personnalisés -->
     <script src="{{ mix('js/app.js') }}"></script>
     @stack('scripts')

@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\MedecinController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\RendezvousController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +26,11 @@ Route::get('/', function () {
 
 Route::resource('patients', PatientController::class);
 
+// route pour medecin
+ Route::resource('medecin',MedecinController::class);
 
+ //  route pour rendez vous
+ Route::resource('rendez-vous',RendezvousController::class);
+
+ //  route pour consultation
+ Route::resource('consultation',ConsultationController::class);

@@ -11,20 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
-        Schema::create('patients', function (Blueprint $table) {
-            $table->id();  // Clé primaire auto-incrémentée
+        Schema::create('medecins', function (Blueprint $table) {
+            $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->date('date_naissance');
-            $table->string('adresse');
+            $table->string('spécialité');
             $table->string('telephone');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('medecins');
     }
 };

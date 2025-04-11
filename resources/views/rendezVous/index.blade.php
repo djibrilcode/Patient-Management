@@ -6,12 +6,12 @@
     <div class="row mb-4">
         <div class="col-md-6">
             <h2 class="mb-0">
-                <i class="bi bi-people-fill text-primary"></i> Gestion des Patients
+                <i class="bi bi-people-fill text-primary"></i> Gestion des Rendez-vous
             </h2>
         </div>
         <div class="col-md-6 text-end">
-            <a href="{{ route('patients.create') }}" class="btn btn-primary" id="addPatientBtn">
-                <i class="bi bi-plus-lg"></i> Nouveau Patient
+            <a href="{{ route('rendezvous.create') }}" class="btn btn-primary" id="addPatientBtn">
+                <i class="bi bi-plus-lg"></i> Nouveau rendez-vous
             </a>
         </div>
     </div>
@@ -38,10 +38,10 @@
         <div class="card-header bg-white">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-0">Liste des Patients</h5>
+                    <h5 class="mb-0">Liste des rendezvous</h5>
                 </div>
                 <div class="col-md-6">
-                    <form method="GET" action="{{ route('patients.index') }}">
+                    <form method="GET" action="{{ route('rendezvous.index') }}">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control" placeholder="Rechercher..." value="{{ request('search') }}">
                             <div class="input-group-append">
@@ -56,17 +56,17 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover " id="patientsTable">
+                <table class="table table-hover" id="patientsTable">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
+                            <th>ID</th>
                             <th>Nom</th>
                             <th>Prénom</th>
-                            <th>DateNaissance</th>
+                            <th>Date de Naissance</th>
                             <th>Adresse</th>
                             <th>Email</th>
                             <th>Téléphone</th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
