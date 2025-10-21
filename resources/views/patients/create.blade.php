@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <label for="prenom" class="form-label">Prénom <span class="text-danger">*</span></label>
                         <input type="text" class="form-control @error('prenom') is-invalid @enderror" 
-                               id="prenom" name="prenom" value="{{ old('prenom') }}" required>
+                               id="prenom" name="prenom" value="{{ old('prenom') }}" required placeholder="Prenom">
                         @error('prenom')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

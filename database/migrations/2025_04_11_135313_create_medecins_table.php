@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('spécialité');
+            $table->foreignId('specialite_id')->constrained('specialites');
             $table->string('telephone');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

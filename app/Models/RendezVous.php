@@ -11,8 +11,13 @@ class Rendezvous extends Model
     use HasFactory;
 
     // Protège l'ID contre les assignations de masse
-    protected $guarded = ['id'];
+protected $fillable = ['patient_id', 'medecin_id', 'date', 'heure', 'statut', 'motif'];
+
     protected $table = 'rendezvous';
+    protected $casts = [
+    'date' => 'date', // ou 'datetime' selon le type
+];
+
 
 
     /**

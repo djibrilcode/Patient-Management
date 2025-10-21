@@ -52,9 +52,12 @@
                     <div class="col-md-6">
                         <label for="role" class="form-label">Rôle</label>
                         <select class="form-select" id="role" name="role" required>
-                            <option value="admin" {{ (old('role', $user->role ?? '') == 'admin' ? 'selected' : '' }}>Administrateur</option>
-                            <option value="medecin" {{ (old('role', $user->role ?? '') == 'medecin' ? 'selected' : '' }}>Médecin</option>
-                            <option value="secretaire" {{ (old('role', $user->role ?? '') == 'secretaire' ? 'selected' : '' }}>Secrétaire</option>
+                            @php
+                                $selectedRole = old('role', isset($user) ? $user->role : '');
+                            @endphp
+                            <option value="admin" {{ $selectedRole == 'admin' ? 'selected' : '' }}>Administrateur</option>
+                            <option value="medecin" {{ $selectedRole == 'medecin' ? 'selected' : '' }}>Médecin</option>
+                            <option value="secretaire" {{ $selectedRole == 'secretaire' ? 'selected' : '' }}>Secrétaire</option>
                         </select>
                     </div>
                 </div>

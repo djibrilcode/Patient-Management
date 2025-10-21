@@ -2,30 +2,32 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Models\Specialite;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Désactive FK pour éviter les blocages au truncate
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('specialites')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        \App\Models\Patient::factory(20)->create();
-        \App\Models\medecin::factory(20)->create();
-        \App\Models\Rendezvous::factory()->count(20)->create();
-        \App\Models\Consultation::factory()->count(20)->create();
-         $this->call([
-        UserSeeder::class,
-        
-    ]);
-$this->call(UsersTableSeeder::class);
+        // Crée les spécialités sans doublons via factory
+        Specialite::factory(15)->create();
+
+        // Autres factories
+        \App\Models\Medecin::factory(10)->create();
+        \App\Models\Patient::factory(10)->create();
+        \App\Models\Consultation::factory(10)->create();
+        \App\Models\Rendezvous::factory(10)->create();
+        \App\Models\Medicament::factory(10)->create();
+        \App\Models\Prescription::factory(20)->create();
+        \App\Models\Ordonnance::factory(10)->create();
+        \App\Models\Facture::factory(10)->create();
+       \App\Models\MedicamentPrescription::factory()->count(10)->create();
+         $this->call(UserSeeder::class);
     }
 }

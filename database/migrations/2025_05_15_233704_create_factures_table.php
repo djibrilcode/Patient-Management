@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('consultation_id')->constrained('consultations');
             $table->decimal('montant', 10, 2);
             $table->enum('statut_paiement', ['payé', 'impayé', 'partiel'])->default('impayé');
-            $table->enum('mode_paiement', ['espèce', 'carte', 'chèque', 'virement'])->nullable();
+            $table->enum('mode_paiement', ['espèce', 'carte', 'chèque', 'virement', 'mynita', 'amanata'])->nullable();
             $table->date('date_paiement')->nullable();
             $table->timestamps();
         });

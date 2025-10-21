@@ -270,7 +270,7 @@ footer a:hover {
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar-container {
-        min-height: auto;
+        min-height: initial;
     }
     
     .main-content {
@@ -317,3 +317,22 @@ footer a:hover {
 .btn i {
     margin-right: 5px;
 }
+
+.text-purple { color: #6f42c1; }
+.text-teal { color: #20c997; }
+.sidebar-link:hover, .sidebar-link.active {
+  background-color: rgba(25, 135, 84, 0.1);
+  border-left: 3px solid #198754;
+}
+.sidebar-sub.active, .sidebar-sub:hover {
+  background-color: rgba(13, 110, 253, 0.1);
+  color: #0d6efd !important;
+}
+.sidebar .nav-link.active {
+  background-color: rgba(25, 135, 84, 0.1);
+  border-left: 4px solid #198754;
+  font-weight: 600;
+}
+.text-purple { color: #6f42c1; }
+.text-orange { color: #fd7e14; }
+.text-teal { color: #20c997; }

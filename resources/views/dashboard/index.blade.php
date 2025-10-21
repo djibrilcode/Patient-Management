@@ -135,8 +135,11 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="application/json" id="rdv-data-json">
+    {!! json_encode($rdvChartData ?? []) !!}
+</script>
 <script>
-    const rdvData = @json($rdvChartData);
+    const rdvData = JSON.parse(document.getElementById('rdv-data-json').textContent);
 
     const ctx = document.getElementById('rdvChart').getContext('2d');
     const rdvChart = new Chart(ctx, {

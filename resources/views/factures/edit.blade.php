@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="montant" class="form-label">
-                            <i class="fas fa-euro-sign"></i> Montant (DH)
+                            <i class="fas fa-euro-sign"></i> Montant (FCFA)
                         </label>
                         <input type="number" step="0.01" class="form-control @error('montant') is-invalid @enderror" 
                                id="montant" name="montant" value="{{ old('montant', $facture->montant) }}" required>
@@ -70,6 +70,8 @@
                             <option value="carte" {{ old('mode_paiement', $facture->mode_paiement) == 'carte' ? 'selected' : '' }}>Carte</option>
                             <option value="chèque" {{ old('mode_paiement', $facture->mode_paiement) == 'chèque' ? 'selected' : '' }}>Chèque</option>
                             <option value="virement" {{ old('mode_paiement', $facture->mode_paiement) == 'virement' ? 'selected' : '' }}>Virement</option>
+                            <option value="mynita" {{ old('mode_paiement', $facture->mode_paiement) == 'mynita' ? 'selected' : '' }}>Mynita</option>
+                            <option value="amanata" {{ old('mode_paiement', $facture->mode_paiement) == 'amanata' ? 'selected' : '' }}>Amanata</option>
                         </select>
                         @error('mode_paiement')
                             <div class="invalid-feedback">{{ $message }}</div>

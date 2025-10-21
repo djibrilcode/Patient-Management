@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -9,25 +9,16 @@ class PatientController extends Controller
 {
     public function index(Request $request)
     {
-        // Initialisation de la requête sur le modèle Patient
-        $patients = Patient::query();
-
-        // Récupération de la valeur de la recherche
         $search = $request->input('search');
 
-        if ($search) {
-            // Recherche multicritère sur nom, prénom et téléphone
-            $patients->where(function ($query) use ($search) {
+        $patients = Patient::query()
+            ->when($search, function ($query) use ($search) {
                 $query->where('nom', 'like', "%{$search}%")
                       ->orWhere('prenom', 'like', "%{$search}%")
                       ->orWhere('telephone', 'like', "%{$search}%");
-            });
-        }
+            })
+            ->paginate(5);
 
-        // Pagination des résultats (5 patients par page)
-        $patients = $patients->paginate(5);
-
-        // Retourner la vue avec les patients filtrés
         return view('patients.index', compact('patients'));
     }
 
@@ -38,6 +29,15 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'date_naissance' => 'required|date',
+            'adresse' => 'required',
+            'telephone' => 'required',
+            'email' => 'required|email|unique:patients,email'
+        ]);
+
         Patient::create($request->all());
         return redirect()->route('patients.index')->with('success', 'Patient ajouté avec succès');
     }
@@ -54,6 +54,15 @@ class PatientController extends Controller
 
     public function update(Request $request, Patient $patient)
     {
+        $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'date_naissance' => 'required|date',
+            'adresse' => 'required',
+            'telephone' => 'required',
+            'email' => 'required|email|unique:patients,email,' . $patient->id
+        ]);
+
         $patient->update($request->all());
         return redirect()->route('patients.index')->with('success', 'Patient mis à jour avec succès');
     }

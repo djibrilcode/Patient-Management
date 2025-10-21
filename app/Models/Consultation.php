@@ -10,6 +10,11 @@ class consultation extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+  protected $casts = [
+    'date_prescription' => 'date',
+];
+
+
     public function patient()
     {
         return $this->belongsTo(Patient::class);
@@ -24,10 +29,5 @@ class consultation extends Model
     {
         return $this->hasOne(Facture::class, 'consultation_id');
     }
-    protected $casts = [
-    'date_consultation' => 'datetime',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime'
-    // autres champs date...
-];
+
 }

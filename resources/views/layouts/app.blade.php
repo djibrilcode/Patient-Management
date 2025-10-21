@@ -6,73 +6,87 @@
     <meta name="description" content="Système de gestion du cabinet médical">
     <title>@yield('title', 'Tableau de bord') - Cabinet Médical</title>
     
-    <!-- Preload des assets critiques -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" as="style">
-    <link rel="preload" href="{{ asset('css/app.css') }}" as="style">
-    
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
-    <!-- Styles personnalisés -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" media="screen">
-
-     <link rel="preload" href="{{ asset('js/app.js') }}" as="script">
-
-       <script src="{{ asset('js/ajax-navigation.js') }}" defer></script>
-    
-    @stack('styles')
     <style>
-             footer {
-        background-color: #2c3e50;
-        color: white;
-    }
+        body.dashboard-body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-row {
+            flex: 1;
+        }
+
+        .sidebar-container {
+            background-color: #fff;
+            border-right: 1px solid #dee2e6;
+            box-shadow: 0 0 4px rgba(0,0,0,0.05);
+            padding-bottom: 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh; /* Optionnel si tu veux full height */
+            overflow-y: auto;
+        }
+
+        main.main-content {
+            padding: 1.5rem;
+            overflow-x: hidden;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+        }
     </style>
+
+    @stack('styles')
 </head>
 <body class="dashboard-body">
-    <!-- Navigation -->
+    <!-- Navbar -->
     @include('partials.navbar')
-    
-    <div class="container-fluid">
-        <div class="row">
+
+    <div class="container-fluid main-row">
+        <div class="row align-items-start">
             <!-- Sidebar -->
             <aside class="col-md-3 col-lg-2 sidebar-container d-print-none">
                 @include('partials.sidebar')
             </aside>
-            
-            <!-- Content Area -->
+
+            <!-- Main Content -->
             <main class="col-md-9 col-lg-10 main-content" role="main">
-                <!-- Gestion des notifications flash avec SweetAlert -->
                 @if(session('success'))
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        showSuccessAlert("{{ session('success') }}");
-                    });
-                </script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            showSuccessAlert("{{ session('success') }}");
+                        });
+                    </script>
                 @endif
-                
                 @if(session('error'))
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        showErrorAlert("{{ session('error') }}");
-                    });
-                </script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            showErrorAlert("{{ session('error') }}");
+                        });
+                    </script>
                 @endif
-                
+
                 @yield('content')
             </main>
         </div>
     </div>
-    
-    <!-- Footer optionnel -->
+
     <!-- Footer -->
-    <footer class="py-4">
+    <footer class="py-4 mt-auto">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -91,7 +105,7 @@
                     <h5>Contact</h5>
                     <ul class="list-unstyled">
                         <li><i class="fas fa-phone me-2"></i> +212 61115 5307</li>
-                        <li><i class="fas fa-envelope me-2"></i><a href="#" >codelive0227@gmail.com</a></li>
+                        <li><i class="fas fa-envelope me-2"></i><a href="#">codelive0227@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
@@ -101,21 +115,14 @@
             </div>
         </div>
     </footer>
-    
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
-            crossorigin="anonymous"></script>
 
-    <!-- SweetAlert2 JS -->
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
-    
-    <!-- Scripts personnalisés -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
     <script>
-        // Configuration globale de SweetAlert2
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -127,23 +134,10 @@
                 toast.addEventListener('mouseleave', Swal.resumeTimer);
             }
         });
-        
-        // Fonctions globales pour les notifications
-        window.showSuccessAlert = (message) => {
-            Toast.fire({
-                icon: 'success',
-                title: message
-            });
-        };
-        
-        window.showErrorAlert = (message) => {
-            Toast.fire({
-                icon: 'error',
-                title: message
-            });
-        };
-        
-        // Fonction de confirmation avant suppression
+
+        window.showSuccessAlert = (message) => Toast.fire({ icon: 'success', title: message });
+        window.showErrorAlert = (message) => Toast.fire({ icon: 'error', title: message });
+
         window.confirmDelete = (formId, title = 'Êtes-vous sûr?', text = "Cette action est irréversible!") => {
             Swal.fire({
                 title: title,
@@ -155,38 +149,11 @@
                 confirmButtonText: 'Oui, supprimer!',
                 cancelButtonText: 'Annuler'
             }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById(formId).submit();
-                }
+                if (result.isConfirmed) document.getElementById(formId).submit();
             });
         };
-
-        // Initialisation au chargement du DOM
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tooltips Bootstrap
-            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-            
-            // Fermeture automatique des alertes Bootstrap après 5 secondes
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                setTimeout(() => {
-                    bootstrap.Alert.getInstance(alert)?.close();
-                }, 5000);
-            });
-            
-            // Gestion des formulaires de suppression
-            document.querySelectorAll('.delete-form').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    confirmDelete(form.id);
-                });
-            });
-        });
     </script>
-    
+
     @stack('scripts')
 </body>
 </html>

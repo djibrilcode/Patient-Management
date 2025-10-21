@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rendezvous', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-            $table->foreignId('medecin_id')->constrained()->onDelete('cascade');
-            $table->date('date');
-            $table->time('heure');
-            $table->string('statut');
-            $table->timestamps();
-            
-        });
+    $table->id();
+    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+    $table->foreignId('medecin_id')->constrained()->onDelete('cascade');
+    $table->date('date');
+    $table->time('heure');
+    $table->string('motif')->nullable();
+    $table->enum('statut', ['prévu', 'annulé', 'terminé', 'confirmé', 'en attente'])->default('prévu');
+    $table->timestamps();
+});
+
     }
 
     /**

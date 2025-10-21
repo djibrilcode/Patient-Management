@@ -5,7 +5,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h4 class="m-0 font-weight-bold text-primary">
-                <i class="fas fa-file-invoice"></i> Facture #FAC-{{ str_pad($facture->id_facture, 6, '0', STR_PAD_LEFT) }}
+                <i class="fas fa-file-invoice"></i> Facture #FAC-{{ str_pad($facture->id,6,'0',STR_PAD_LEFT) }} 
             </h4>
             <div>
                 <a href="{{ route('factures.edit', $facture->id) }}" class="btn btn-sm btn-primary">
@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p><strong>Date création:</strong> {{ $facture->created_at->format('d/m/Y H:i') }}</p>
-                                    <p><strong>Montant:</strong> {{ number_format($facture->montant, 2) }} DH</p>
+                                    <p><strong>Montant:</strong> {{ number_format($facture->montant, 2) }} FCFA</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p>
@@ -84,11 +84,10 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <p><strong>Date consultation:</strong> {{ $facture->consultation->date_consultation->format('d/m/Y H:i') }}</p>
+                            <p><strong>Date consultation:</strong> {{ $facture->consultation->date_consultation}}</p>
                             <p><strong>Médecin:</strong> Dr. {{ $facture->consultation->medecin->nom ?? 'Non spécifié' }}</p>
                         </div>
                         <div class="col-md-6">
-                            <p><strong>Diagnostic:</strong> {{ $facture->consultation->diagnostic ?? 'Non renseigné' }}</p>
                             <p><strong>Traitement:</strong> {{ $facture->consultation->traitement ?? 'Non renseigné' }}</p>
                         </div>
                     </div>
@@ -99,10 +98,11 @@
                 <button class="btn btn-success me-2" onclick="window.print()">
                     <i class="fas fa-print"></i> Imprimer
                 </button>
-                <a href="{{ route('factures.export', ['facture' => $facture->id, 'format' => 'pdf']) }}" 
-   class="btn btn-primary">
+              <a href="{{ route('factures.export.pdf', $facture) }}" class="btn btn-primary">
     <i class="fas fa-file-pdf"></i> Exporter PDF
 </a>
+
+
             </div>
         </div>
     </div>

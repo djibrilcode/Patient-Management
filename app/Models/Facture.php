@@ -20,11 +20,8 @@ class Facture extends Model
     ];
 
      // Définir les champs qui doivent être convertis en Carbon
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'date_paiement' // Ajoutez ce champ
-    ];
+   protected $dates = ['date_paiement', 'created_at', 'updated_at'];
+
 
     
     // Nombre de jours de retard
@@ -36,13 +33,18 @@ class Facture extends Model
         return $this->belongsTo(Consultation::class);
     }
 
+    public function reglements()
+    {
+        return $this->hasMany(Reglement::class);
+    }
+
     /**
      * Vérifie si la facture est en retard
      */
     public function isLate(): bool
     {
         if ($this->statut_paiement !== 'payé' && $this->created_at) {
-            return $this->created_at->diffInDays(now()) > 30;
+            return Carbon::parse($this->created_at)->diffInDays(now()) > 30;
         }
         return false;
     }
@@ -53,7 +55,7 @@ class Facture extends Model
     public function daysLate(): int
     {
         if ($this->isLate()) {
-            return $this->created_at->diffInDays(now());
+            return Carbon::parse($this->created_at)->diffInDays(now());
         }
         return 0;
     }
@@ -83,9 +85,10 @@ protected static function boot()
 }
 
 protected $casts = [
-    'date_paiement' => 'datetime',
     'created_at' => 'datetime',
-    'updated_at' => 'datetime'
+    'updated_at' => 'datetime',
+    'date_paiement' => 'datetime', // si tu as cette colonne
 ];
+
 
 }
