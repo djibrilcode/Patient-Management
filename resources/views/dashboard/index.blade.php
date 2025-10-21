@@ -4,8 +4,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="card shadow-sm" style="border: none; border-radius: 10px;">
-                <div class="card-header" style="background-color: #198754; color: white; border-radius: 10px 10px 0 0 !important;">
+            <div class="card shadow-sm mb-0 text-primary" style="border: none; border-radius: 10px;">
+                <div class="card-header " style="background-color:rgb(25, 65, 135); color: white; border-radius: 10px 10px 0 0 !important;">
                     <h3 class="mb-0">
                         <i class="fas fa-tachometer-alt"></i> Tableau de Bord
                     </h3>
@@ -89,7 +89,7 @@
                         <!-- Graphique -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4" style="border: none; border-radius: 10px;">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: #198754; color: white; border-radius: 10px 10px 0 0 !important;">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: rgb(25, 65, 135); color: white; border-radius: 10px 10px 0 0 !important;">
                                     <h6 class="m-0 font-weight-bold">Activité récente</h6>
                                 </div>
                                 <div class="card-body">
@@ -103,7 +103,7 @@
                         <!-- Derniers patients -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4" style="border: none; border-radius: 10px;">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: #198754; color: white; border-radius: 10px 10px 0 0 !important;">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: rgb(25, 65, 135); color: white; border-radius: 10px 10px 0 0 !important;">
                                     <h6 class="m-0 font-weight-bold">Derniers patients</h6>
                                 </div>
                                 <div class="card-body">
