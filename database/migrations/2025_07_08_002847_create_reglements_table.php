@@ -15,7 +15,7 @@ return new class extends Migration
     $table->id();
     $table->foreignId('facture_id')->constrained()->onDelete('cascade');
     $table->decimal('montant_regle', 10, 2);
-    $table->enum('mode', ['espèce', 'carte', 'chèque', 'virement']);
+    $table->enum('mode', ['espèce', 'carte', 'chèque', 'virement','mynita', 'amanata']);
     $table->date('date_reglement');
     $table->timestamps();
 });

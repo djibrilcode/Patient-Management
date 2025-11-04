@@ -9,10 +9,14 @@ class Reglement extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['facture_id', 'montant', 'mode_paiement', 'date_paiement'];
+    protected $fillable = ['facture_id', 'montant_regle', 'mode', 'date_reglement'];
 
     public function facture()
     {
         return $this->belongsTo(Facture::class);
     }
+    protected $casts = [
+    'date_reglement' => 'date',
+];
+
 }

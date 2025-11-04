@@ -91,4 +91,29 @@ protected $casts = [
 ];
 
 
+
+// Retourne le montant restant à payer
+public function resteAPayer()
+{
+    $totalRegle = $this->reglements()->sum('montant_regle');
+    return max(0, $this->montant - $totalRegle);
+}
+
+// Retourne le statut automatique de la facture
+public function calculerStatut()
+{
+    $totalRegle = $this->reglements()->sum('montant_regle');
+
+    if ($totalRegle >= $this->montant) {
+        return 'payé';
+    } elseif ($totalRegle > 0) {
+        return 'partiel';
+    } else {
+        return 'impayé';
+    }
+}
+
+
+
+
 }

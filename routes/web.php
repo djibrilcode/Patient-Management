@@ -43,6 +43,13 @@ Route::get('/content', function () {
 // Calendrier rendez-vous
 Route::get('/rendezvous/calendar', [RendezvousController::class, 'calendar'])->name('rendezvous.calendar');
 
+Route::resource('documents', DocumentsPatientController::class);
+
+// Route spécifique pour le téléchargement
+Route::get('/documents/{document}/download', [DocumentsPatientController::class, 'download'])
+     ->name('documents.download');
+     
+
 /*
 |--------------------------------------------------------------------------
 | Auth (invités uniquement)

@@ -9,7 +9,7 @@ class Documents_patient extends Model
 {
      use HasFactory;
 
-    protected $fillable = ['patient_id', 'titre', 'chemin_fichier', 'date'];
+    protected $fillable = ['patient_id', 'titre', 'fichier', 'date'];
 
     public function patient()
     {

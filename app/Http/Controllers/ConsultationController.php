@@ -18,6 +18,7 @@ class ConsultationController extends Controller
                         $q2->where('nom', 'like', "%{$search}%")
                            ->orWhere('prenom', 'like', "%{$search}%")
                            ->orWhere('telephone', 'like', "%{$search}%")
+                           ->orwhere('motif', 'like', "%{$search}%")
                     )
                   ->orWhereHas('medecin', fn($q2) =>
                         $q2->where('nom', 'like', "%{$search}%")
